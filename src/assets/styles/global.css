@@ -1,0 +1,280 @@
+:root {
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F8F9FA;
+  --brand-blue: #0056b3; /* Bleu corporate, inspiré des grands groupes */
+  --brand-blue-light: rgba(0, 86, 179, 0.08);
+  --text-main: #212529;
+  --text-muted: #6c757d;
+  --border-light: #e9ecef;
+}
+
+/* Effet de survol sur la carte Expérience */
+.experience-card {
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-light);
+  background-color: var(--bg-primary);
+  cursor: pointer;
+}
+
+.experience-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px var(--brand-blue-light);
+  border-color: var(--brand-blue);
+}
+
+/* Le bouton d'expansion (la flèche) */
+.expand-icon {
+  color: var(--text-muted);
+  transition: color 0.3s ease;
+}
+
+.experience-card:hover .expand-icon {
+  color: var(--brand-blue);
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  font-family: 'Inter', -apple-system, sans-serif;
+  overflow-y: scroll;
+}
+
+/* Style pour la photo de profil (Page d'accueil) */
+.profile-photo {
+  width: 420px;
+  height: 420px;
+  object-fit: cover;
+  border-radius: 50%; /* Remplace par 2rem si tu préfères le squircle */
+  border: 6px solid var(--bg-primary);
+  box-shadow: 0 10px 30px var(--brand-blue-light);
+  transition: transform 0.3s ease;
+}
+
+.profile-photo:hover {
+  transform: scale(1.02);
+}
+
+.text-brand { color: var(--brand-blue) !important; }
+.bg-brand { background-color: var(--brand-blue) !important; }
+.bg-light-alt { background-color: var(--bg-secondary) !important; }
+
+/* Design de la Timeline de la page formation */
+.timeline-clean {
+  border-left: 3px solid var(--brand-blue);
+  margin-left: 1rem;
+  padding-left: 2rem;
+  position: relative;
+}
+
+.timeline-item { position: relative; margin-bottom: 2.5rem; }
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  /* On fixe la taille du cercle en pixels pour être précis */
+  width: 16px;
+  height: 16px;
+  
+  /* LA MAGIE EST ICI : 
+     On recule de la taille de la marge (2rem) 
+     Puis on recule de 9.5px (qui est exactement la moitié du cercle - la moitié de la ligne) 
+  */
+  left: calc(-2rem - 9.5px);
+  
+  /* On descend un peu le cercle pour l'aligner avec le texte dans la carte (qui a un padding) */
+  top: 2rem; 
+  
+  background: var(--bg-primary);
+  border: 3px solid var(--brand-blue);
+  border-radius: 50%;
+}
+
+/* Surcharge Bootstrap pour les inputs */
+.form-control:focus {
+  border-color: var(--brand-blue);
+  box-shadow: 0 0 0 0.25rem var(--brand-blue-light);
+}
+
+
+/* Styles pour le menu de filtrage (Pills) */
+.filter-pill {
+  border: 1px solid var(--border-light);
+  background-color: var(--bg-primary);
+  color: var(--text-muted);
+  border-radius: 50rem; /* Bords totalement arrondis */
+  padding: 0.5rem 1.25rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.filter-pill:hover {
+  background-color: var(--border-light);
+  color: var(--text-main);
+}
+
+.filter-pill.active {
+  background-color: var(--brand-blue);
+  border-color: var(--brand-blue);
+  color: #FFFFFF;
+  box-shadow: 0 4px 10px var(--brand-blue-light);
+}
+
+
+/* =========================================
+   CARROUSEL DES OUTILS (HOME PAGE)
+   ========================================= */
+.tools-carousel-wrapper {
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  width: 100%;
+  padding: 2.5rem 0;
+  background-color: #ffffff; /* Fond blanc pur */
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* L'effet de fondu sur les bords (Fade-out) */
+.tools-carousel-wrapper::before,
+.tools-carousel-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 150px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none; /* Empêche le dégradé de bloquer les clics */
+}
+
+.tools-carousel-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.tools-carousel-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+/* La piste qui contient les éléments et qui s'anime */
+/* La piste : on espace beaucoup plus les outils entre eux (6rem au lieu de 4rem) 
+   et on ralentit fortement (70s au lieu de 35s) */
+.tools-carousel-track {
+  display: inline-flex;
+  gap: 6rem; /* Plus d'espace entre les blocs */
+  padding-right: 6rem; /* Doit être égal au gap pour la boucle */
+  animation: scrollTrack 35s linear infinite; /* 2x plus lent et majestueux */
+}
+
+/* Le style de chaque outil : on sépare le logo de son texte */
+.tool-item {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem; /* Plus d'espace entre l'image et le texte (au lieu de 0.75rem) */
+  font-weight: 600;
+  color: var(--text-muted);
+  font-size: 1.15rem;
+  transition: color 0.3s ease;
+  cursor: default;
+}
+
+/* Pause l'animation quand on passe la souris dessus */
+.tools-carousel-wrapper:hover .tools-carousel-track {
+  animation-play-state: paused;
+}
+
+
+.tool-item:hover {
+  color: var(--brand-blue);
+}
+
+/* L'animation clé de la boucle infinie */
+@keyframes scrollTrack {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } /* On décale exactement de la moitié (la partie dupliquée) */
+}
+
+/* =========================================
+   CARTES D'EXPERTISE (HOME PAGE)
+   ========================================= */
+/* Le nouveau style pour les tags de compétences */
+.skill-badge {
+  background-color: var(--brand-blue-light); /* Fond bleu très clair */
+  color: var(--brand-blue); /* Texte bleu brand */
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px; /* Bords arrondis modernes */
+  transition: all 0.2s ease;
+}
+
+.skill-badge:hover {
+  background-color: var(--brand-blue);
+  color: #ffffff;
+}
+
+/* On ajuste l'icône pour qu'elle s'aligne bien à côté du titre */
+.expertise-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--brand-blue-light);
+  color: var(--brand-blue);
+  border-radius: 12px;
+  font-size: 1.25rem;
+  flex-shrink: 0; /* Empêche l'icône de se déformer */
+}
+
+/* Style de la liste d'expertise façon "Terminal" */
+.expertise-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.expertise-list li {
+  position: relative;
+  padding-left: 1.5rem; /* Espace pour le chevron */
+  margin-bottom: 0.6rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Le fameux chevron ajouté en CSS */
+.expertise-list li::before {
+  content: '❯'; /* Symbole du chevron */
+  position: absolute;
+  left: 0;
+  top: 1px;
+  color: var(--brand-blue);
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+/* =========================================
+   CARTES POLAROÏD (SECTION PASSIONS)
+   ========================================= */
+.polaroid-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0; /* Bordure très douce */
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.polaroid-card:hover {
+  transform: translateY(-5px) rotate(1deg); /* Petit effet photo qu'on soulève */
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.08);
+}
+
+.polaroid-img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover; /* Recadre l'image sans la déformer. Garantit que la photo ne sera jamais déformée ou écrasée */
+  border-bottom: 1px solid #f1f5f9; /* Ligne subtile entre l'image et le texte */
+}
